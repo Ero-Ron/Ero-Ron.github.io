@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieGuessr</title>
+    <link rel="stylesheet" href="fin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lexend:wght@100..900&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+    <h1>It's Over !</h1>
+
+    <h2>Your score : <span id="score"></span></h2>
+
+    <button class="scorebtn" id="saveScore">Add your score the classement</button>
+
+    <h2>Classement</h2>
+
+    <div id="classement"></div>
+
+    <button class="scoreretry" id="retry">Retry ?</button>
+
+    <button class="scoreacc" id="accueil">Back to Home</button>
+
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "abe8ce1fdcc4b6e0ca42330fa5d81945",
+            authDomain: "movieguessr-48add.firebaseapp.com",
+            projectId: "movieguessr-48add",
+            storageBucket: "movieguessr-48add.firebasestorage.app",
+            messagingSenderId: "571793295589",
+            appId: "1:571793295589:web:ed3a7a930a97ff65776c0c"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        //-----------------------------------------------------------------------------------------------------
+
+        let score = localStorage.getItem("dernierScore");
+        document.getElementById("score").textContent = score;
+
+        const btn = document.getElementById("saveScore");
+
+        btn.addEventListener("click", async () => {
+
+            let pseudo = prompt("Entre ton pseudo :");
+
+            if (!pseudo) return;
+
+            await addDoc(collection(db, "scores"), {
+                nom: pseudo,
+                score: parseFloat(score),
+                date: Date.now()
+            });
+
+            btn.disabled = true;
+
+            afficherClassement();
+
+        });
+
+        async function afficherClassement() {
+
+            const querySnapshot = await getDocs(collection(db, "scores"));
+
+            let scores = [];
+
+            querySnapshot.forEach((doc) => {
+                scores.push(doc.data());
+            });
+
+            scores.sort((a, b) => b.score - a.score);
+
+            let container = document.getElementById("classement");
+            container.innerHTML = "";
+
+            scores.slice(0, 15).forEach((joueur, index) => {
+
+                let div = document.createElement("div");
+
+                div.textContent =
+                    (index + 1) + ". " +
+                    joueur.nom +
+                    " — " +
+                    joueur.score + " pts";
+
+                container.appendChild(div);
+
+            });
+
+        }
+
+        afficherClassement();
+
+        const retryBtn = document.getElementById("retry");
+        const accueilBtn = document.getElementById("accueil");
+
+        retryBtn.addEventListener("click", () => {
+            window.location.href = "jeu.html";
+        });
+
+        accueilBtn.addEventListener("click", () => {
+            window.location.href = "../index.html";
+        });
+    </script>
+</body>
+
+</html>

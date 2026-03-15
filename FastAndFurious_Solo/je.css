@@ -1,0 +1,184 @@
+body{
+    font-family: "Lexend", sans-serif;
+    background-image: url(../Image/backg.jpg);
+    background-size: cover;
+    background-position: center;
+    color: #9CED47;
+}
+
+.title{
+    font-size: 5rem;
+    text-align: center;
+}
+
+.indice{
+    text-align: center;
+}
+
+.img {
+    background-color:#3C3C3C;
+    border: 3px solid #9CED47;
+    width: 250px;
+    height: 355px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.review{
+    border: 1px solid #9CED47;
+    display: block;
+    margin: 40px auto;
+}
+
+form {
+    display: flex;             
+    justify-content: center; 
+    align-items: center;       
+    gap: 10px;                 
+    margin-top: 20px;
+}
+
+.img h1{
+    display: flex;
+    font-size: 8rem;
+    justify-content: center;
+    text-align: center;
+}
+
+.img img {
+    width: 100%;         
+    height: 100%;        
+    object-fit: cover;   
+    display: block;     
+}
+
+.barre{
+    display: flex;
+    width: 38rem;
+    padding: 10px;
+    font-family: "Lexend", sans-serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    font-style: normal;
+    border-radius: 1.3rem;
+    background-color: #3C3C3C;
+    color: #9CED47;
+    border: 3px solid #9CED47;
+
+}
+
+.trouve{
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+    font-family: "Lexend", sans-serif;
+    background-color: #9CED47;
+    padding: 10px;
+    border-radius: 30px;
+    width: 100px;
+    height: 52px;
+    color: #3C3C3C;
+    cursor: pointer;
+    border: 3px solid #9CED47; 
+
+}
+
+.trouve:hover {
+    background-color: #3C3C3C;
+    color: #9CED47;
+    border: 3px solid #9CED47;
+}
+
+.temps {
+    display: flex;                     
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20px;
+    position: fixed;
+
+}
+
+
+.bouton{
+    display: flex;
+    background-color: #eee;
+    padding: 20px;
+    text-align: center;
+    border-radius: 20px;
+    width: 200px;   
+
+}
+
+.boutons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;  
+}
+
+.boutonindice {
+    font-family: "Lexend", sans-serif;
+    background-color: #9CED47;
+    padding: 0;
+    border-radius: 30px;
+    width: 100px;
+    height: 30px;
+    color: #3C3C3C;
+    cursor: pointer;
+    border: 3px solid #9CED47;
+    text-align: center;
+    line-height: 20px;
+    margin-bottom: 2rem;
+}
+
+.boutonindice:hover {
+    background-color: #3C3C3C;
+    color: #9CED47;
+    border: 3px solid #9CED47;
+}
+
+.ind1{
+    display: flex;
+    background-color: #eee;
+    padding: 20px;
+    text-align: center;
+    border-radius: 20px;
+    width: 200px;   
+}
+
+
+.skip{
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+    font-family: "Lexend", sans-serif;
+    background-color: #3C3C3C;
+    border-radius: 20px;
+    width: 200px;
+    height: 52px;
+    color: #9CED47;
+    cursor: pointer;
+    border: 3px solid #3C3C3C;
+    margin: 0 auto;
+}
+
+.skip:hover{
+    background-color: #9CED47;
+    color: #3C3C3C;
+    border: 3px solid #3C3C3C;
+}
+
+#suggestions {
+    width: 720px;
+    max-width: 90%;
+    margin: 10px auto;
+}

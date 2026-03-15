@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieGuessr</title>
+    <link rel="stylesheet" href="je.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lexend:wght@100..900&display=swap"
+        rel="stylesheet">
+
+    <audio id="good" src="../Son/Good.mp3" preload="auto"></audio>
+    <audio id="bad" src="../Son/Bad.mp3" preload="auto"></audio>
+
+</head>
+<!-------------------------------------------------------- HTML ----------------------------------------------------------->
+
+<body>
+    <div class="temps">
+        <div class="score">
+            <h2>Point : <span id="point">0</span></h2>
+        </div>
+        <div class="timer">
+            <h2 id="time">:00</h2>
+        </div>
+    </div>
+    <h1 class="title"> MovieGuessr </h1>
+    <div class="img">
+        <h1 id="indice3">?</h1>
+    </div>
+    <h3 class="indice" id="indice1"></h3>
+    <h3 class="indice" id="indice2"></h3>
+    <img class="review" id="image-review" src="" alt="Review du film">
+    <form role="search" method="get" action="/recherche">
+        <input class="barre" type="search" id="input" name="q" placeholder="Exemple : Entrer le film"
+            autocomplete="off" />
+        <button class="trouve" type="submit">Trouver !</button>
+    </form>
+    <div id="suggestions" style="position:relative;"></div>
+
+    <div class="boutons-container">
+        <input class="boutonindice" id="ind1" type="button" value="Bonus1" />
+        <input class="boutonindice" id="ind2" type="button" value="Bonus2" />
+        <input class="boutonindice" id="ind3" type="button" value="Bonus3" />
+    </div>
+
+    <button class="skip" type="button" id="skip">
+        <h2> Skip the movie</h2>
+    </button>
+
+    <p></p>
+
+
+    <!---------------------------------------------------- BEHAVIOR ---------------------------------------------------->
+    <script type="module">
+
+        //----------------------------------------------- BASE DE DONNEE---------------------------------------------------
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "abe8ce1fdcc4b6e0ca42330fa5d81945",
+            authDomain: "movieguessr-48add.firebaseapp.com",
+            projectId: "movieguessr-48add",
+            storageBucket: "movieguessr-48add.firebasestorage.app",
+            messagingSenderId: "571793295589",
+            appId: "1:571793295589:web:ed3a7a930a97ff65776c0c",
+            measurementId: "G-WR8SF76SFZ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function saveScore(pseudo, score) {
+
+            await addDoc(collection(db, "scores"), {
+                nom: pseudo,
+                score: score,
+                date: Date.now()
+            });
+
+        }
+    </script>
+
+    <script>
+
+
+        //------------------------------ VARIABLES ------------------------------
+
+        let ajout = 5
+        let util1 = false
+        let util2 = false
+        let util3 = false
+        let dejutil = [];
+        let reponseUtilisateur = "";
+        let point = document.getElementById("point");
+        let currentIndex = 0;
+        const goodSound = document.getElementById("good");
+        const badSound = document.getElementById("bad");
+        const input = document.getElementById("input");
+        const suggestions = document.getElementById("suggestions");
+
+        //---------------------------- MOVIES --------------------------
+        const films = [
+            { titre: "It Follows", annee: 2014 },
+            { titre: "The Lord of the Rings: The Fellowship of the Ring", annee: 2001 },
+            { titre: "The Substance", annee: 2024 },
+            { titre: "Barbie", annee: 2023 },
+            { titre: "Midsommar", annee: 2019 },
+            { titre: "Parasite", annee: 2019 },
+            { titre: "Wake Up Dead Man: A Knives Out Mystery", annee: 2025 },
+            { titre: "The Menu", annee: 2022 },
+            { titre: "Ratatouille", annee: 2007 },
+            { titre: "Fight Club", annee: 1999 },
+            { titre: "The Hunger Games", annee: 2012 },
+            { titre: "Weapons", annee: 2025 },
+            { titre: "The Truman Show", annee: 1998 },
+            { titre: "Drive", annee: 2011 },
+            { titre: "Interstellar", annee: 2014 },
+            { titre: "Requiem for a Dream", annee: 2000 },
+            { titre: "The Blair Witch Project", annee: 1999 },
+            { titre: "Harry Potter and the Chamber of Secrets", annee: 2002 },
+            { titre: "Pulp Fiction", annee: 1994 },
+            { titre: "Five Nights at Freddy's", annee: 2023 },
+            { titre: "The Social Network", annee: 2010 },
+            { titre: "Tangled", annee: 2010 },
+            { titre: "M3GAN", annee: 2022 },
+            { titre: "Zootopia", annee: 2016 },
+            { titre: "Into the Wild", annee: 2007 },
+            { titre: "Oppenheimer", annee: 2023 },
+            { titre: "Unfriended", annee: 2014 },
+            { titre: "Se7en", annee: 1995 },
+            { titre: "Avatar: The Way of Water", annee: 2022 },
+            { titre: "The Prestige", annee: 2006 },
+            { titre: "Train to Busan", annee: 2016 },
+            { titre: "Shutter Island", annee: 2010 },
+            { titre: "Insidious", annee: 2010 },
+            { titre: "Inglourious Basterds", annee: 2009 },
+            { titre: "Alien", annee: 1979 },
+            { titre: "Anatomy of a Fall", annee: 2023 },
+            { titre: "Asteroid City", annee: 2023 },
+            { titre: "Marty Supreme", annee: 2025 },
+            { titre: "Memories of Murder", annee: 2003 },
+            { titre: "Come and See", annee: 1985 },
+            { titre: "Little Miss Sunshine", annee: 2025 },
+            { titre: "Paddington", annee: 2014 },
+            { titre: "Mean Girls", annee: 2004 },
+            { titre: "Trap", annee: 2024 },
+            { titre: "Carrie", annee: 1976 },
+            { titre: "Us", annee: 2019 },
+            { titre: "The Wild Robot", annee: 2024 },
+            { titre: "Titanic", annee: 1997 },
+            { titre: "KPop Demon Hunters", annee: 2025 },
+            { titre: "The Fault in Our Stars", annee: 2014 },
+            { titre: "The Grand Budapest Hotel", annee: 2014 },
+            { titre: "The Thing", annee: 1982 },
+            { titre: "Sinners", annee: 2025 },
+            { titre: "Brokeback Mountain", annee: 2005 },
+            { titre: "V for Vendetta", annee: 2005 },
+            { titre: "Grave of the Fireflies", annee: 1988 },
+            { titre: "Kill Bill: Vol. 1", annee: 2003 },
+            { titre: "The Intouchables", annee: 2011 },
+            { titre: "Alice in Wonderland", annee: 2010 },
+            { titre: "Pixels", annee: 2015 },
+            { titre: "Uncharted", annee: 2022 },
+            { titre: "The Hobbit: An Unexpected Journey", annee: 2012 },
+            { titre: "How to Train Your Dragon", annee: 2010 },
+            { titre: "The Super Mario Bros. Movie", annee: 2023 },
+            { titre: "Pirates of the Caribbean: The Curse of the Black Pearl", annee: 2003 },
+            { titre: "Fantastic Mr. Fox", annee: 2009 },
+            { titre: "Gone Girl", annee: 2014 },
+            { titre: "Death on the Nile", annee: 2022 },
+            { titre: "Get Out", annee: 2017 },
+            { titre: "Eternal Sunshine of the Spotless Mind", annee: 2004 },
+            { titre: "La La Land", annee: 2016 },
+            { titre: "Star Wars: The Force Awakens", annee: 2015 },
+            { titre: "Star Wars: Episode III – Revenge of the Sith", annee: 2014 },
+            { titre: "12 Angry Men", annee: 1957 },
+            { titre: "Spirited Away", annee: 2001 },
+            { titre: "Lady Bird", annee: 2017 },
+            { titre: "The Housemaid", annee: 2025 },
+            { titre: "Guardians of the Galaxy", annee: 2014 },
+            { titre: "Pitch Perfect", annee: 2012 },
+            { titre: "Charlie and the Chocolate Factory", annee: 2005 },
+            { titre: "Men in Black", annee: 1997 },
+            { titre: "Notting Hill", annee: 1999 },
+            { titre: "The Green Mile", annee: 1999 },
+            { titre: "The Fifth Element", annee: 1997 },
+            { titre: "Donnie Darko", annee: 2001 },
+            { titre: "Amélie", annee: 2001 },
+            { titre: "The Sixth Sense", annee: 1999 },
+            { titre: "The Virgin Suicides", annee: 1999 },
+            { titre: "Kung Fu Panda", annee: 2008 },
+            { titre: "Arrival", annee: 2016 },
+            { titre: "Rear Window", annee: 1954 },
+            { titre: "The Silence of the Lambs", annee: 1991 },
+            { titre: "Deadpool & Wolverine", annee: 2024 },
+            { titre: "Avatar: Fire and Ash", annee: 2025 },
+            { titre: "Wicked", annee: 2024 },
+            { titre: "Spider-Man", annee: 2002 },
+            { titre: "Challengers", annee: 2024 },
+            { titre: "Encanto", annee: 2021 },
+            { titre: "Jumanji: Welcome to the Jungle", annee: 2017 },
+            { titre: "Jumanji", annee: 1995 },
+            { titre: "I Am Legend", annee: 2007 },
+            { titre: "Prisoners", annee: 2013 },
+            { titre: "Inception", annee: 2010 },
+            { titre: "Dead Poets Society", annee: 1989 },
+            { titre: "The Lion King", annee: 1994 },
+            { titre: "Jurassic Park", annee: 1993 },
+            { titre: "The Perks of Being a Wallflower", annee: 2012 },
+            { titre: "Deadpool", annee: 2016 },
+            { titre: "It", annee: 2017 },
+            { titre: "Twilight", annee: 2008 },
+            { titre: "Finding Nemo", annee: 2003 },
+            { titre: "Jaws", annee: 1975 },
+            { titre: "Paranormal Activity", annee: 2007 },
+            { titre: "A Minecraft Movie", annee: 2025 },
+            { titre: "Frozen", annee: 2013 },
+            { titre: "The Chronicles of Narnia: The Lion, the Witch and the Wardrobe", annee: 2005 },
+            { titre: "The Terminator", annee: 1984 },
+            { titre: "Scream", annee: 1996 },
+            { titre: "Kingsman: The Secret Service", annee: 2014 },
+            { titre: "Black Swan", annee: 2010 }];
+
+        films.forEach((film, i) => {
+            film.flou = `${i + 1}.png`;
+            film.affiche = `${i + 1}.png`;
+        });
+        const min = 0;
+        const max = films.length - 1;
+
+        const reviewImage = document.getElementById("image-review");
+
+        function getRandom(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function quiz() {
+            currentIndex = getRandom(min, max);
+            if (dejutil.includes(currentIndex)) {
+                quiz();
+            } else {
+                dejutil.push(currentIndex);
+            }
+        }
+
+        function delai(x, cb) {
+            setTimeout(cb, x);
+        }
+
+        // Choisir la première image aléatoire dès le début
+        quiz();
+        reviewImage.src = "../Image/review/" + (currentIndex + 1) + ".png";
+
+        // Event sur le bouton
+        const buttonsearch = document.querySelector("button");
+        buttonsearch.addEventListener("click", (event) => {
+            event.preventDefault();
+            reponseUtilisateur = document.getElementById("input").value;
+
+            if (reponseUtilisateur === films[currentIndex].titre) {
+                point.textContent = parseFloat(point.textContent) + ajout;
+                const goodSound = new Audio("../Son/Good.mp3");
+                goodSound.play();
+                indice3.innerHTML = `<img src="../Image/affiche/${films[currentIndex].affiche}" style="width:250px; border-radius:10px;">`
+                delai(2000, () => {
+                    quiz();
+                    reviewImage.src = "../Image/review/" + (currentIndex + 1) + ".png";
+                    document.getElementById("input").value = "";
+                    indice1.textContent = ""
+                    indice2.textContent = ""
+                    indice3.textContent = "?"
+                    util1 = false
+                    util2 = false
+                    util3 = false
+                    ajout = 5
+                })
+
+            } else {
+                const badSound = new Audio("../Son/Bad.mp3");
+                badSound.play();
+                document.getElementById("input").value = "";
+            }
+        });
+
+        let tempo = document.getElementById("time");
+        let minute = 10
+        let seconde = 0
+
+        tempo.textContent = minute + ":" + (seconde < 10 ? "0" + seconde : seconde);
+
+        async function temps() {
+            if (minute === 0 && seconde === 0) {
+                localStorage.setItem("dernierScore", point.textContent);
+                window.location.href = "finfast.html";
+                return;
+            }
+
+            if (seconde > 0) {
+                seconde -= 1;
+            } else {
+                seconde = 59;
+                minute -= 1;
+            }
+
+            tempo.textContent = minute + ":" + (seconde < 10 ? "0" + seconde : seconde);
+        }
+        setInterval(temps, 1000);
+
+
+        const ind1 = document.getElementById("ind1")
+        ind1.addEventListener("click", (event) => {
+            event.preventDefault();
+            reponseUtilisateur = document.getElementById("ind1").value;
+            let indice1 = document.getElementById("indice1")
+
+            if (util1 == false) {
+                indice1.textContent = films[currentIndex].annee;
+                ajout -= 0.5;
+                util1 = true;
+            }
+
+        });
+
+        const ind2 = document.getElementById("ind2")
+        ind2.addEventListener("click", (event) => {
+            event.preventDefault();
+            reponseUtilisateur = document.getElementById("ind2").value;
+            let indice1 = document.getElementById("indice2")
+
+            if (util2 == false) {
+                tiret(films[currentIndex].titre)
+                ajout -= 1;
+                util2 = true;
+            }
+
+        })
+
+        function tiret(text) {
+            let mot = ""
+            for (let i = 0; i < text.length; i++) {
+                if (text[i] == " ") {
+                    mot += "&nbsp;&nbsp;&nbsp;&nbsp;";
+                } else {
+                    mot += "_ ";
+                }
+            }
+            indice2.innerHTML = mot;
+        }
+        const ind3 = document.getElementById("ind3")
+        ind3.addEventListener("click", (event) => {
+            event.preventDefault();
+            reponseUtilisateur = document.getElementById("ind3").value;
+            let indice3 = document.getElementById("indice3")
+            if (util3 == false) {
+                indice3.innerHTML = `<img src="../Image/flou/${films[currentIndex].flou}" style="width:250px; border-radius:10px;">`
+                ajout -= 2.5;
+                util3 = true;
+            }
+        })
+
+        collBtn = document.getElementById("skip")
+
+        collBtn.addEventListener("click", function () {
+            indice3.innerHTML = `<img src="../Image/affiche/${films[currentIndex].affiche}" style="width:250px; border-radius:10px;">`;
+            badSound.play();
+            let totalSeconds = minute * 60 + seconde;
+            totalSeconds -= 20;
+            if (totalSeconds < 0) totalSeconds = 0;
+
+            minute = Math.floor(totalSeconds / 60);
+            seconde = totalSeconds % 60;
+            ajout = 5
+            delai(2000, () => {
+                quiz();
+                reviewImage.src = "../Image/review/" + (currentIndex + 1) + ".png";
+                document.getElementById("input").value = "";
+                indice1.textContent = ""
+                indice2.textContent = ""
+                indice3.textContent = "?"
+                util1 = false
+                util2 = false
+                util3 = false
+            })
+
+        })
+
+
+        //  --------------------------------------------------- API -------------------------------------------------------------------
+
+        input.addEventListener("input", function () {
+            let texte = input.value.trim();
+            if (texte.length < 3) {
+                suggestions.innerHTML = "";
+                return;
+            }
+
+            const apiKey = "abe8ce1fdcc4b6e0ca42330fa5d81945";
+            const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(texte)}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    suggestions.innerHTML = ""; // vider les anciennes suggestions
+
+                    data.results.slice(0, 3).forEach(film => { // 3 suggestions max
+                        let div = document.createElement("div");
+                        div.textContent = film.title; // le titre du film TMDB
+                        div.classList.add("suggestion");
+                        div.style.cursor = "pointer";
+                        div.style.padding = "5px";
+                        div.style.borderBottom = "1px solid #9CED47";
+                        div.style.marginBottom = "3px";
+
+                        // remplir l'input quand on clique
+                        div.addEventListener("click", () => {
+                            input.value = film.title;
+                            suggestions.innerHTML = "";
+                        });
+
+                        suggestions.appendChild(div);
+                    });
+                })
+                .catch(error => console.error("Erreur API :", error));
+
+
+        });
+
+
+
+
+
+    </script>
+</body>
+
+</html>

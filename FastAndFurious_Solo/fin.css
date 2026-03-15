@@ -1,0 +1,101 @@
+body{
+    font-family: "Lexend", sans-serif;
+    background-image: url(../Image/backg.jpg);
+    background-size: cover;
+    background-position: center;
+    color: #9CED47;
+}
+
+h1{
+    font-size: 5rem;
+    text-align: center;
+}
+
+h2{
+    font-size: 2.5rem;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+#classement {
+
+    text-align: center; 
+    margin: 3rem auto;  
+    width: 30%;        
+}
+
+#classement div {
+    border-bottom: 1px solid #9CED47;
+    padding: 0.5rem 0;
+    font-size: 1.4rem;
+}
+
+
+.scorebtn {
+    font-family: "Lexend", sans-serif;
+    background-color: #9CED47;
+    border-radius: 30px;
+    width: 280px;
+    height: 90px;
+    font-size: 18px;
+    color: #3C3C3C;
+    cursor: pointer;
+    border: 3px solid #9CED47;
+    text-align: center;
+    margin-bottom: 2rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.scorebtn:hover {
+    background-color: #3C3C3C;
+    color: #9CED47;
+    border: 3px solid #9CED47;
+}
+
+.scoreretry {
+    font-family: "Lexend", sans-serif;
+    background-color: #9CED47;
+    border-radius: 30px;
+    width: 360px;
+    height: 60px;
+    font-size: 18px;
+    color: #3C3C3C;
+    cursor: pointer;
+    border: 3px solid #9CED47;
+    text-align: center;
+    margin-bottom: 2rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.scoreretry:hover {
+    background-color: #3C3C3C;
+    color: #9CED47;
+    border: 3px solid #9CED47;
+}
+
+.scoreacc{
+    font-family: "Lexend", sans-serif;
+    background-color: #3C3C3C;
+    border-radius: 30px;
+    width: 280px;
+    height: 38px;
+    font-size: 18px;
+    color: #9CED47;
+    cursor: pointer;
+    border: 3px solid #3C3C3C;
+    text-align: center;
+    margin-bottom: 2rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.scoreacc:hover {
+    background-color: #9CED47;
+    color: #3C3C3C;
+    border: 3px solid #3C3C3C;
+}
