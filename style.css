@@ -1,0 +1,198 @@
+body {
+    font-family: "Lexend", sans-serif;
+    background-image: url(../Image/backg.jpg);
+    background-size: cover;
+    background-position: center;
+    color: #9CED47;
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    font-size: 5rem;
+    text-align: center;
+    margin-top: 2rem;
+}
+h2 {
+    margin-top: 5rem;
+    text-align: center;
+}
+    
+.txt {
+    font-size: 1.1rem;
+    background-color: #131212;
+    max-width: 800px;       
+    margin: 3rem auto;      
+    text-align: center;
+    padding: 1rem;        
+    line-height: 1.6;
+    border-radius: 1.3rem;
+}
+.cards {
+    display: flex;
+    flex-wrap: wrap;       
+    gap: 30px;
+    justify-content: center;
+    margin-top: 40px;
+}
+.card {
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 200px;
+    box-sizing: border-box;
+    background-color: #131212;
+    border: 0.5px solid #9CED47;
+}
+.card h4, .card h1, .card p {
+    text-align: center;
+    width: 100%;
+}
+
+.img {
+    background-color: #3C3C3C;
+    border: 3px solid #9CED47;
+    width: 120px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 15px;
+    margin-bottom: 1rem;
+}
+.question {
+    font-size: 3rem;
+}
+.barre {
+    display: flex;
+    width: 5rem;
+    padding: 6px;
+    font-family: "Lexend", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 300;
+    border-radius: 1.3rem;
+    background-color: #3C3C3C;
+    color: #9CED47;
+    border: 3px solid #9CED47;
+}
+.recherche {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.trouve, .boutonindice, .boutonskip, .play {
+    font-family: "Lexend", sans-serif;
+    cursor: pointer;
+    border-radius: 1.3rem;
+    border: 3px solid;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+
+.trouve {
+    font-size: 0.7rem;
+    background-color: #9CED47;
+    color: #3C3C3C;
+    border-color: #9CED47;
+    padding: 6px 8px;
+}
+
+.trouve:hover {
+    background-color: #3C3C3C;
+    color: #9CED47;
+    border-color: #9CED47;
+}
+.boutonindice {
+    background-color: #9CED47;
+    color: #3C3C3C;
+    width: 100px;
+    height: 30px;
+    line-height: 20px;
+    margin-bottom: 2rem;
+    border-color: #9CED47;
+}
+
+.boutonindice:hover {
+    background-color: #3C3C3C;
+    color: #9CED47;
+    border-color: #9CED47;
+}
+
+
+.boutonskip {
+    background-color: #3C3C3C;
+    color: #9CED47;
+    width: 130px;
+    height: 40px;
+    line-height: 20px;
+    margin-bottom: 2rem;
+    border-color: #3C3C3C;
+}
+
+.boutonskip:hover {
+    background-color: #9CED47;
+    color: #3C3C3C;
+    border-color: #3C3C3C;
+}
+
+
+.play {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3C3C3C;
+    font-size: 2rem;
+    padding: 10px;
+    border-radius: 38px;
+    width: 300px;
+    height: 100px;
+    color: #9CED47;
+    border-color: #3C3C3C;
+    margin: 10rem auto 0 auto;
+}
+
+.play:hover {
+    color: #3C3C3C;
+    border-color: #9CED47;
+    background-color: #9CED47;
+}
+
+.ajout1, .ajout2, .ajout3, .ajout4, .ajout5 {
+    display: none;
+    margin: 0.3rem;
+    text-align: center;
+}
+
+.red {
+    color: #D52941;
+}
+footer {
+    margin-top: 5rem;
+    text-align: center;
+}
+
+footer p {
+    margin: 0.5rem 0;
+}
+
+.let {
+    color: #9CED47;
+    text-decoration: none;
+}
+
+.let:hover {
+    color: #4e7c1e;
+}
+#classement {
+    max-width: 400px;
+    margin: 2rem auto;
+    text-align: center;
+    border-top: 1px solid #9CED47;
+    padding-top: 1rem;
+}
+
+#classement div {
+    border-bottom: 1px solid #9CED47;
+    padding: 5px 0;
+}

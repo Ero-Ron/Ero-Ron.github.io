@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieGuessr</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lexend:wght@100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <h1> MovieGuessr</h1>
+
+    <p class="txt"> Welcome in MovieGuessr, here for passing time or having fun ? The rules are simple, once the game
+        will start you will face a review coming from a movie, your job is to
+        find to witch movies it belong to. You have 10 minutes to find the more as posssible and increase your score.
+        There are actually 120 reviews available, but more reviews
+        and more games will come in the future so stay update !
+    </p>
+
+    <h2> How does it work ?</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h4>Find the movie</h4>
+
+            <div class="img">
+                <h1 class="question">?</h1>
+            </div>
+
+            <div class="recherche">
+                <input class="barre" type="text" value="Titanic" readonly>
+                <button id="trouver" class="trouve">Find!</button>
+            </div>
+
+            <h4 id="ajout1" style="display:none;">+5 points!</h4>
+        </div>
+
+        <div class="card">
+            <h4>Use hint 1</h4>
+
+            <input class="boutonindice" id="id1" type="button" value="Bonus1" />
+            <h4 class="ajout2">Year of the movie</h4>
+            <h4 class="ajout2">1997</h4>
+            <h4 class="ajout2 red">-0.5 point!</h4>
+        </div>
+
+        <div class="card">
+            <h4>Use hint 2</h4>
+
+            <input class="boutonindice" id="id2" type="button" value="Bonus2" />
+            <h4 class="ajout3">Number of letters in the movie</h4>
+            <h4 class="ajout3">_ _ _ _ _ _ _</h4>
+            <h4 class="ajout3 red">-1 point!</h4>
+        </div>
+
+        <div class="card">
+            <h4>Use hint 3</h4>
+
+            <div class="img">
+                <h1 class="question">?</h1>
+            </div>
+
+            <input class="boutonindice" id="id3" type="button" value="Bonus3" />
+            <h4 class="ajout4 red">-2.5 points!</h4>
+        </div>
+
+        <div class="card">
+            <h4>Skip the movie</h4>
+
+            <div class="img">
+                <h1 class="question">?</h1>
+            </div>
+
+            <input class="boutonskip" id="id4" type="button" value="Skip" />
+            <h4 class="ajout5 red">-20 seconds!</h4>
+        </div>
+    </div>
+
+    <button class="play" onclick="window.location.href='FastAndFurious_Solo/jeu.html';">Tap to play!</button>
+
+    <footer>
+        <p>Created with <a href="https://letterboxd.com/" class="let">Letterboxd Reviews</a></p>
+        <p>Made by <a href="https://www.linkedin.com/in/ronan-prigent/" class="let">Ronan Prigent</a></p>
+    </footer>
+
+</body>
+
+<script>
+    // Bouton "trouver"
+    let ajout1 = document.getElementById("ajout1")
+    const trouver = document.getElementById("trouver")
+    trouver.addEventListener("click", () => {
+        ajout1.style.display = "block"
+    });
+
+    // Indice 1
+    let ajout2 = document.getElementsByClassName("ajout2")
+    const indice1 = document.getElementById("id1")
+    indice1.addEventListener("click", () => {
+        for (let i = 0; i < ajout2.length; i++) {
+            ajout2[i].style.display = "block"
+        }
+    });
+
+    // Indice 2
+    let ajout3 = document.getElementsByClassName("ajout3")
+    const indice2 = document.getElementById("id2")
+    indice2.addEventListener("click", () => {
+        for (let i = 0; i < ajout3.length; i++) {
+            ajout3[i].style.display = "block"
+        }
+    });
+
+    // Indice 3
+    let ajout4 = document.getElementsByClassName("ajout4")
+    const indice3 = document.getElementById("id3")
+    indice3.addEventListener("click", () => {
+        for (let i = 0; i < ajout4.length; i++) {
+            ajout4[i].style.display = "block"
+        }
+    });
+
+    // Skip
+    let ajout5 = document.getElementsByClassName("ajout5")
+    const indice4 = document.getElementById("id4")
+    indice4.addEventListener("click", () => {
+        for (let i = 0; i < ajout5.length; i++) {
+            ajout5[i].style.display = "block"
+        }
+    });
+
+
+
+</script>
+
+</html>
