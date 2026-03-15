@@ -97,6 +97,8 @@
     const trouver = document.getElementById("trouver")
     trouver.addEventListener("click", () => {
         ajout1.style.display = "block"
+        const divImg = document.querySelector(".card .img");
+        divImg.innerHTML = '<img src="Image/tit.png" alt="Movie" class="tit">';
     });
 
     // Indice 1
@@ -123,6 +125,8 @@
     indice3.addEventListener("click", () => {
         for (let i = 0; i < ajout4.length; i++) {
             ajout4[i].style.display = "block"
+            const divSkip = indice3.closest(".card").querySelector(".img");
+            divSkip.innerHTML = '<img src="Image/titflou.png" alt="Skipped Movie" class="tit">';
         }
     });
 
@@ -132,6 +136,8 @@
     indice4.addEventListener("click", () => {
         for (let i = 0; i < ajout5.length; i++) {
             ajout5[i].style.display = "block"
+            const divSkip = indice4.closest(".card").querySelector(".img");
+            divSkip.innerHTML = '<img src="Image/tit.png" alt="Skipped Movie" class="tit">';
         }
     });
 
